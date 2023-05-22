@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="./style.css">
+<head>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+<header>
+    <h1>System Rekrutacji</h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="/login/">Zaloguj się</a></li>
+        <li><a href="/register/">Zarejestruj się</a></li>
+    </ul>
+</nav>
+
+<hr>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<footer>
+    <hr>
+    <p>&copy; {{ year }} Uczelnia. Wszelkie prawa zastrzeżone.</p>
+</footer>
+</body>
+</html>

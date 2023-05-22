@@ -1,0 +1,95 @@
+/* styles.css */
+
+/* Resetowanie stylów dla elementów HTML */
+body, h1, h2, h3, p, ul, li, label, input, button {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Układ strony */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    color: #333;
+    line-height: 1.4;
+    padding: 20px;
+}
+
+header {
+    background-color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+nav {
+    background-color: #f7f7f7;
+    padding: 10px;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+}
+
+nav li {
+    margin-right: 10px;
+}
+
+nav a {
+    color: #333;
+    text-decoration: none;
+}
+
+main {
+    background-color: #fff;
+    padding: 20px;
+}
+
+footer {
+    background-color: #f7f7f7;
+    padding: 10px;
+    text-align: center;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+}
+
+/* Wyszukiwarka kierunków studiów */
+form {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="text"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 5px 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+ul {
+    list-style-type: none;
+    margin: 10px 0;
+}
+
+ul li {
+    margin-bottom: 5px;
+}

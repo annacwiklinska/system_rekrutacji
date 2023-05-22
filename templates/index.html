@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Strona Główna{% endblock %}
+
+{% block content %}
+    <h2>Witaj na stronie głównej </h2>
+
+    <p>Jeśli jesteś studentem lub pracownikiem uczelni, prosimy o zalogowanie się:</p>
+    <a href="/login/">Zaloguj się</a>
+
+    <p>Jeśli jesteś nowym użytkownikiem, zapraszamy do rejestracji:</p>
+    <a href="/register/">Zarejestruj się</a>
+
+    <hr>
+
+    <h3>Wyszukiwarka kierunków studiów:</h3>
+    <form action="/search/" method="GET">
+        <label for="search-input">Wyszukaj kierunek:</label>
+        <input type="text" id="search-input" name="query" placeholder="Wprowadź nazwę kierunku...">
+        <button type="submit">Szukaj</button>
+    </form>
+{% endblock %}
