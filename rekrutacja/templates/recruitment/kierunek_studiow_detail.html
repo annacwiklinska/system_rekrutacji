@@ -1,0 +1,19 @@
+{% extends 'recruitment/base.html' %}
+
+{% block title %}Szczegóły kierunku studiów{% endblock %}
+
+{% block content %}
+    <h2>Szczegóły kierunku {{ kierunek.name }}</h2>
+    <br>
+    <div class="details">
+        <p class="item"><strong>Nazwa:</strong> {{ kierunek.name }}</p>
+        <p class="item"><strong>Uczelnia:</strong> {{ kierunek.university }}</p>
+        <p class="item"><strong>Stopień:</strong> {{ kierunek.level }}</p>
+        <p class="item"><strong>Tryb:</strong> {{ kierunek.form }}</p>
+        {% if kierunek.typ %}
+            <p class="item"><strong>Typ:</strong> {{ kierunek.typ }}</p>
+        {% endif %}
+        <p class="item"><strong>Rok akademicki:</strong> {{ kierunek.academic_year }}</p>
+        <p class="item"><strong>Opis:</strong> {{ kierunek.description }}</p>
+    </div>
+{% endblock %}

@@ -1,0 +1,10 @@
+INSERT INTO rekrutacja_university (name, kind, address, establishment_date, official_university_id, status)
+VALUES
+    ('Uniwersytet Gdański', 'publiczna', 'ul. Jana Bażyńskiego 8, 80-309 Gdańsk', '1970-03-20', 244, 'działająca'),
+    ('Uniwersytet Jagielloński w Krakowie', 'publiczna', 'ul. Gołębia 24, 31-007 Kraków', '1364-05-12', 246, 'działająca'),
+    ('Wyższa Szkoła Mądrości', 'publiczna', 'ul. Wiedzy Tajemnej 1, 00-001 Warszawa', '1950-09-15', 111, 'działająca'),
+    ('Akademia Odkryć', 'niepubliczna', 'ul. Naukowców Polskich 10, 80-080 Gdańsk', '1990-05-20', 222, 'zlikwidowana'),
+    ('Europejski Uniwersytet Kreatywności', 'niepubliczna', 'ul. Obi-Wana Kenobiego 5, 31-031 Kraków', '1999-04-01', 333, 'działająca'),
+    ('Wyższa Szkoła Teologiczno–Społeczna w Warszawie', 'kościelna', 'ul. Wyborna 20, 03-681 Warszawa', '1997-05-11', 397, 'działająca'),
+    ('Politechnika Bydgoska im. Jana i Jędrzeja Śniadeckich', 'publiczna', 'ul. Aleje Prof. Sylwestra Kaliskiego 7, 85-796 Bydgoszcz', '1951-09-01', 277, 'działająca');
+

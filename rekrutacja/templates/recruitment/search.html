@@ -1,0 +1,24 @@
+{% extends 'recruitment/base.html' %}
+
+{% block title %}Wyszukiwarka kierunków studiów{% endblock %}
+
+{% block content %}
+    <h2>Wyszukiwarka kierunków studiów</h2>
+
+    <form action="/search/" method="GET">
+        <label for="search-input">Wyszukaj kierunek:</label>
+        <input type="text" id="search-input" name="query" placeholder="Wprowadź nazwę kierunku...">
+        <button type="submit">Szukaj</button>
+    </form>
+
+    {% if kierunki %}
+        <h3>Znalezione kierunki:</h3>
+        <ul>
+            {% for kierunek in kierunki %}
+                <li><a href="{% url 'kierunek_detail' kierunek.id %}">{{ kierunek.name }} – {{ kierunek.university }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Brak wyników dla podanego zapytania.</p>
+    {% endif %}
+{% endblock %}
