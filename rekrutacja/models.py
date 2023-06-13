@@ -164,11 +164,10 @@ class Application(models.Model):
         verbose_name_plural = "Wnioski"
         unique_together = ('candidate', 'program')
 
-
-class Ranking(models.Model):
-    application = models.ForeignKey(Application, on_delete=models.CASCADE)
-    points = models.IntegerField()
-
-    class Meta:
-        verbose_name = "Ranking"
-        verbose_name_plural = "Rankingi"
+# class Ranking(models.Model):
+#     application = models.ForeignKey(Application, on_delete=models.CASCADE)
+#     points = models.IntegerField()
+#
+#     class Meta:
+#         verbose_name = "Ranking"
+#         verbose_name_plural = "Rankingi"

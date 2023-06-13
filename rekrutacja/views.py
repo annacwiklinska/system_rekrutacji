@@ -11,7 +11,7 @@ from system_rekrutacji.settings import LOGIN_URL
 from .decorators import *
 from .forms import LoginForm, CandidateSignUpForm, EmployeeSignUpForm, EmployeeForm, CandidateForm, ExamsForm, \
     ProgramForm
-from .models import Program, Candidate, Employee, Exams, RequiredExams, Exam, Application
+from .models import Program, Candidate, Employee, Exams, RequiredExams, Exam, Application, University
 
 
 def index(request):
@@ -20,7 +20,7 @@ def index(request):
 
 def search(request):
     query = request.GET.get('query', '')
-    programs = Program.objects.none()  # Pusty QuerySet
+    programs = Program.objects.none()
 
     if query:
         programs = Program.objects.filter(Q(name__icontains=query))
@@ -32,7 +32,6 @@ def search(request):
     return render(request, 'recruitment/search.html', context)
 
 
-
 def program_detail(request, program_id):
     program = get_object_or_404(Program, id=program_id)
     required_exams = RequiredExams.objects.filter(program=program)
@@ -41,6 +40,31 @@ def program_detail(request, program_id):
         'required_exams': required_exams
     }
     return render(request, 'recruitment/kierunek_studiow_detail.html', context)
+
+
+def all_programs(request):
+    programs = Program.objects.all()
+    return render(request, 'recruitment/all_programs.html', {'programs': programs})
+
+
+def random_program(request):
+    program = Program.objects.order_by('?').first()
+    return redirect('kierunek_detail', program_id=program.id)
+
+
+def university_list(request):
+    universities = University.objects.all()
+    return render(request, 'recruitment/university_list.html', {'universities': universities})
+
+
+def university_detail(request, university_id):
+    university = get_object_or_404(University, id=university_id)
+    programs = Program.objects.filter(university=university)
+    return render(request, 'recruitment/university_detail.html', {'university': university, 'programs': programs})
+
+
+def faq(request):
+    return render(request, 'recruitment/faq.html')
 
 
 def logout_view(request):
@@ -105,43 +129,6 @@ def employee_signup(request):
 def register(request):
     return render(request, 'recruitment/register.html')
 
-
-# @login_required
-# def candidate_profile(request):
-#     candidate = Candidate.objects.get(user=request.user)
-#
-#     if request.method == 'POST':
-#         form = CandidateProfileForm(request.POST, instance=candidate)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('candidate_profile')
-#     else:
-#         form = CandidateProfileForm(instance=candidate)
-#
-#     context = {
-#         'candidate': candidate,
-#         'form': form
-#     }
-#     return render(request, 'recruitment/candidate_profile_edit.html', context)
-#
-#
-# @login_required
-# def employee_profile(request):
-#     employee = Employee.objects.get(user=request.user)
-#
-#     if request.method == "POST":
-#         form = EmployeeProfileForm(request.POST, instance=employee)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('employee_profile')
-#     else:
-#         form = EmployeeProfileForm(instance=employee)
-#
-#     context = {
-#         "pracownik": employee,
-#         "form": form
-#     }
-#     return render(request, 'recruitment/employee_profile_edit.html', context)
 
 @login_required
 def edit_profile(request):
@@ -256,29 +243,6 @@ def delete_exam(request, exam_id):
     return redirect('edit_exams')
 
 
-# def university_programs(request):
-#     employee = Employee.objects.get(user=request.user)
-#     programs = Program.objects.filter(university=employee.university)
-#     return render(request, 'recruitment/university_programs.html', {'programs': programs, 'employee': employee})
-
-
-# def university_programs(request):
-#     employee = Employee.objects.get(user=request.user)
-#     programs = Program.objects.filter(university=employee.university)
-#
-#     if request.method == 'POST':
-#         form = ProgramForm(request.POST)
-#         if form.is_valid():
-#             program = form.save(commit=False)
-#             program.university = employee.university
-#             program.save()
-#             return redirect('university_programs')
-#     else:
-#         form = ProgramForm()
-#
-#     return render(request, 'recruitment/university_programs.html',
-#                   {'programs': programs, 'form': form, 'employee': employee})
-
 def university_programs(request):
     employee = Employee.objects.get(user=request.user)
     programs = Program.objects.filter(university=employee.university)
@@ -385,6 +349,20 @@ def candidate_applications(request):
 def program_applications(request):
     employee = Employee.objects.get(user=request.user)
     applications = Application.objects.filter(program__university=employee.university)
+
+    for application in applications:
+        required_exams = RequiredExams.objects.filter(program=application.program)
+        exam_scores = {}
+        total_points = 0
+        for required_exam in required_exams:
+            exam = Exams.objects.filter(candidate=application.candidate, name=required_exam.name).first()
+            if exam:
+                exam_score = exam.score * required_exam.multiplier
+                exam_scores[required_exam.name.name] = exam_score
+                total_points += exam_score
+        application.exam_scores = exam_scores
+        application.total_points = total_points
+
     return render(request, 'recruitment/program_applications.html', {'applications': applications})
 
 

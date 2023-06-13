@@ -1,0 +1,12 @@
+{% extends 'recruitment/base.html' %}
+
+{% block content %}
+    <h1>Wszystkie kierunki studiów</h1>
+    <ul>
+        {% for program in programs %}
+            <li><a href="{% url 'kierunek_detail' program_id=program.id %}">{{ program.name }}</a></li>
+        {% empty %}
+            <li>Brak danych</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
