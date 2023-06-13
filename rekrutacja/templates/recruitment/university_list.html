@@ -1,0 +1,12 @@
+{% extends 'recruitment/base.html' %}
+
+{% block content %}
+    <h1>Wszystkie uczelnie</h1>
+    <ul>
+        {% for university in universities %}
+            <li><a href="{% url 'university_detail' university_id=university.id %}">{{ university.name }}</a></li>
+        {% empty %}
+            <li>Brak danych</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

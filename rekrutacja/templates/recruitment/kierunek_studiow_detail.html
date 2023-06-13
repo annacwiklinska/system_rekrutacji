@@ -1,0 +1,51 @@
+{% extends 'recruitment/base.html' %}
+
+{% block title %}Szczegóły kierunku studiów{% endblock %}
+
+{% block content %}
+    <h2>Szczegóły kierunku {{ program.name }}</h2>
+    <br>
+    <div class="details">
+        <p class="item"><strong>Nazwa:</strong> {{ program.name }}</p>
+        <p class="item"><strong>Uczelnia:</strong> {{ program.university }}</p>
+        <p class="item"><strong>Stopień:</strong> {{ program.level }}</p>
+        <p class="item"><strong>Tryb:</strong> {{ program.form }}</p>
+        {% if program.type %}
+            <p class="item"><strong>Typ:</strong> {{ program.type }}</p>
+        {% endif %}
+        <p class="item"><strong>Rok akademicki:</strong> {{ program.academic_year }}</p>
+        <p class="item"><strong>Opis:</strong> {{ program.description }}</p>
+        {% if required_exams %}
+            <h3>Wymagane egzaminy:</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>Nazwa egzaminu</th>
+                    <th>Mnożnik</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for required_exam in required_exams %}
+                    <tr>
+                        <td>{{ required_exam.name }}</td>
+                        <td>{{ required_exam.multiplier }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+    {% if user.is_candidate %}
+        <form method="post" action="{% url 'submit_application' program.id %}">
+            {% csrf_token %}
+            <button type="submit">Aplikuj</button>
+        </form>
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p class="{{ message.tags }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'recruitment/base.html' %}
+
+{% block title %}Edycja wyników egzaminów{% endblock %}
+
+{% block content %}
+    <h2>Wyniki egzaminów</h2>
+    {% if exams %}
+        <table>
+            <thead>
+            <tr>
+                <th>Egzamin</th>
+                <th>Wynik</th>
+                <th>Akcje</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for exam in exams %}
+                <tr>
+                    <td>{{ exam.name }}</td>
+                    <td>{{ exam.score }}</td>
+                    <td>
+                        <a href="{% url 'edit_exam' exam.id %}">Edytuj</a>
+                        <a href="{% url 'delete_exam' exam.id %}">Usuń</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Brak wyników egzaminów.</p>
+    {% endif %}
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Zapisz</button>
+    </form>
+
+{% endblock %}

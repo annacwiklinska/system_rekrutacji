@@ -1,0 +1,20 @@
+{% extends 'recruitment/base.html' %}
+
+{% block content %}
+    <h1>Edytuj status wniosku</h1>
+    <br>
+
+    <form method="POST">
+        {% csrf_token %}
+        <p>
+            <label for="status">Nowy status:</label>
+            <select name="status" id="status">
+                <option value="przyjęty">Przyjęty</option>
+                <option value="odrzucony">Odrzucony</option>
+                <option value="na liście rezerwowej">Na liście rezerwowej</option>
+            </select>
+        </p>
+        <br>
+        <button type="submit">Zapisz</button>
+    </form>
+{% endblock %}

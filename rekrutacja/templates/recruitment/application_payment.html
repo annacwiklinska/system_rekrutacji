@@ -1,0 +1,13 @@
+{% extends 'recruitment/base.html' %}
+
+{% block title %}Opłata rekrutacyjna{% endblock %}
+
+{% block content %}
+    <h2>Opłata rekrutacyjna</h2>
+    <p>Na ten kierunek studiów obowiązuje opłata rekrutacyjna w wysokości 90 zł.</p>
+    <form method="post" action="{% url 'confirm_payment' application.id %}">
+        {% csrf_token %}
+        <button type="submit">Zapłać</button>
+        <button><a href="/candidate_applications/">Nie teraz</a></button>
+    </form>
+{% endblock %}

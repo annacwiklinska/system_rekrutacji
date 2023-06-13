@@ -1,0 +1,26 @@
+{% extends 'recruitment/base.html' %} {% block title %} Profil Kandydata
+{% endblock %} {% block content %}
+    <h1>Profil Kandydata</h1>
+    <p><strong>Login:</strong> {{ profile.user.username }}</p>
+    <p><strong>Imię:</strong> {{ profile.first_name }}</p>
+    <p><strong>Nazwisko:</strong> {{ profile.last_name }}</p>
+    <p><strong>Data urodzenia:</strong> {{ profile.dob }}</p>
+    <p><strong>PESEL:</strong> {{ profile.pesel }}</p>
+    <p><strong>Numer telefonu:</strong> {{ profile.phone_number }}</p>
+    <p><strong>Ulica:</strong> {{ profile.street }}</p>
+    <p><strong>Miasto:</strong> {{ profile.city }}</p>
+    <p><strong>Kod pocztowy:</strong> {{ profile.zip_code }}</p>
+    <p><strong>Numer domu:</strong> {{ profile.house_number }}</p>
+    <p><strong>Numer mieszkania:</strong> {{ profile.flat_number }}</p>
+    <p><strong>Kraj:</strong> {{ profile.country }}</p>
+
+
+    <br>
+    <form action="{% url 'profile_edit' %}" method="GET">
+        <input class="button" type="submit" value="Edytuj profil"/>
+    </form><br>
+
+    <form action="{% url 'delete_account' %}" method="GET">
+        <input class="button" type="submit" value="Usuń profil"/>
+    </form>
+{% endblock %}

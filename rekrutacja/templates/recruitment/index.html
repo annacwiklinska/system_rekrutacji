@@ -1,0 +1,48 @@
+{% extends 'recruitment/base.html' %} {% block title %} Strona Główna
+{%endblock%} {% block content %}
+<h2>Witaj na stronie głównej</h2>
+{% if not user.is_authenticated %}
+<p>
+  Jeśli jesteś nowym użytkownikiem, zapraszamy do rejestracji:
+  <button><a href="/register/">Zarejestruj się</a></button>
+</p>
+{% endif %}
+<hr />
+
+<h3>Wyszukiwarka kierunków studiów</h3>
+<form id="search" action="/search/" method="GET">
+  <label for="search-input">Wyszukaj kierunek:</label>
+  <input
+    type="text"
+    id="search-input"
+    name="query"
+    placeholder="Wprowadź nazwę kierunku..."
+  />
+  <button type="submit">Szukaj</button>
+</form>
+
+<section id="index">
+  <div class="tile"><a href="/university_list/">Lista uczelni</a></div>
+  <div class="tile"><a href="/all_programs/">Lista kierunków</a></div>
+  <div class="tile"><a href="/random_program/">Losowy kierunek</a></div>
+  <div class="tile"><a href="/faq/">FAQ</a></div>
+  <div class="desc">
+    <h3>O systemie</h3>
+    <p>
+      Witaj na naszej platformie rekrutacyjnej, ułatwiającej wyszukiwanie,
+      aplikowanie i śledzenie rekrutacji na różne kierunki studiów na
+      uczelniach. Z nami odnajdziesz swoją wymarzoną ścieżkę edukacyjną w prosty
+      i wygodny sposób.
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet ab sed
+      tempora? Nihil doloribus itaque obcaecati dolorem autem delectus. Quas,
+      voluptatibus impedit? Eveniet iure assumenda quidem exercitationem,
+      maiores repellat in aliquid reiciendis blanditiis explicabo, alias
+      voluptas necessitatibus neque rem hic fugiat. Veritatis consequatur
+      pariatur sit hic eligendi, ea quae blanditiis!
+    </p>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'recruitment/base.html' %}
+
+{% block title %}Kierunki studiów na uczelni{% endblock %}
+
+{% block content %}
+    <h2>Kierunki studiów na {{ employee.university }}</h2>
+    {% if programs %}
+        <table>
+            <thead>
+            <tr>
+                <th>Kierunek</th>
+                <th>Edytuj</th>
+                <th>Usuń</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for program in programs %}
+                <tr>
+                    <td><a href="{% url 'kierunek_detail' program.id %}">{{ program.name }}</a></td>
+                    <td><a href="{% url 'edit_program' program.id %}">Edytuj</a></td>
+                    <td><a href="{% url 'delete_program' program.id %}">Usuń</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Brak dostępnych kierunków studiów na tej uczelni.</p>
+    {% endif %}
+
+    <h3>Dodaj nowy kierunek studiów</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <h3>Wymagane egzaminy</h3>
+        {% for exam in exams %}
+            <input type="checkbox" name="required_exams" value="{{ exam.id }}">{{ exam.name }}
+            <input type="number" name="multiplier_{{ exam.id }}" step="0.1" min="0" value="0"><br>
+        {% endfor %}
+        <br>
+        <button type="submit">Dodaj</button>
+    </form>
+{% endblock %}
+

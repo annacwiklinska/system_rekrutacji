@@ -1,0 +1,33 @@
+/* line 1, rekrutacja/static/rekrutacja/style.scss */
+* {
+  margin: 0;
+  padding: 0; }
+
+/* line 6, rekrutacja/static/rekrutacja/style.scss */
+body {
+  background-color: #F6F7EB; }
+  /* line 8, rekrutacja/static/rekrutacja/style.scss */
+  body button {
+    border: none;
+    background-color: #3F88C5;
+    padding: 0.5em 1em; }
+    /* line 12, rekrutacja/static/rekrutacja/style.scss */
+    body button a {
+      text-decoration: none;
+      color: #F6F7EB; }
+  /* line 17, rekrutacja/static/rekrutacja/style.scss */
+  body header {
+    border: solid green;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
+    /* line 23, rekrutacja/static/rekrutacja/style.scss */
+    body header h1 a {
+      border: solid red;
+      color: #393E41;
+      text-decoration: none; }
+    /* line 28, rekrutacja/static/rekrutacja/style.scss */
+    body header .user-panel {
+      display: flex;
+      gap: 3em; }

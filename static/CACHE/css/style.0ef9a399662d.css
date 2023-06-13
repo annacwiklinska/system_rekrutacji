@@ -1,0 +1,59 @@
+/* line 6, rekrutacja/static/rekrutacja/style.scss */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px; }
+
+/* line 13, rekrutacja/static/rekrutacja/style.scss */
+.header {
+  background-color: #f5f5f5;
+  padding: 10px;
+  text-align: center; }
+  /* line 18, rekrutacja/static/rekrutacja/style.scss */
+  .header h1 {
+    color: #333;
+    font-size: 24px; }
+  /* line 23, rekrutacja/static/rekrutacja/style.scss */
+  .header p {
+    color: #333;
+    font-size: 16px; }
+
+/* line 31, rekrutacja/static/rekrutacja/style.scss */
+.navbar ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0; }
+  /* line 38, rekrutacja/static/rekrutacja/style.scss */
+  .navbar ul li {
+    margin: 0 10px; }
+    /* line 41, rekrutacja/static/rekrutacja/style.scss */
+    .navbar ul li a {
+      color: #333;
+      text-decoration: none; }
+      /* line 45, rekrutacja/static/rekrutacja/style.scss */
+      .navbar ul li a:hover {
+        text-decoration: underline; }
+
+/* line 54, rekrutacja/static/rekrutacja/style.scss */
+.content {
+  margin-top: 20px; }
+  /* line 57, rekrutacja/static/rekrutacja/style.scss */
+  .content h2 {
+    color: #333;
+    font-size: 20px; }
+  /* line 62, rekrutacja/static/rekrutacja/style.scss */
+  .content p {
+    color: #333;
+    font-size: 16px; }
+
+/* line 69, rekrutacja/static/rekrutacja/style.scss */
+.footer {
+  background-color: #f5f5f5;
+  padding: 10px;
+  text-align: center; }
+  /* line 74, rekrutacja/static/rekrutacja/style.scss */
+  .footer p {
+    color: #333;
+    font-size: 14px; }

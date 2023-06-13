@@ -1,0 +1,43 @@
+{% extends 'recruitment/base.html' %}
+
+{% block title %}Moje aplikacje{% endblock %}
+
+{% block content %}
+    <h2>Moje aplikacje</h2>
+    {% if applications %}
+        <table class="wide">
+            <thead>
+            <tr>
+                <th>Kierunek studiów</th>
+                <th>Uczelnia</th>
+                <th>Status</th>
+                <th>Data złożenia</th>
+                <th>Akcje</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for application in applications %}
+                <tr>
+                    <td>{{ application.program.name }}</td>
+                    <td>{{ application.program.university }}</td>
+                    <td>{{ application.status }}</td>
+                    <td>{{ application.date }}</td>
+                    {% if application.status == 'nieopłacony' %}
+                        <td>
+                            <button><a href="/application_payment/{{ application.id }}/">Zapłać</a></button>
+                        </td>
+                    {% else %}
+                        <td>
+                            <button><a href="/confirm_payment/{{ application.id }}">Wyświetl potwierdzenie</a></button>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <br
+        <p>Jeśli chcesz zrezygnować z rekrutacji na dany kierunek, skontaktuj się z administratorem.</p>
+    {% else %}
+        <p>Brak aplikacji.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'recruitment/base.html' %}
+
+{% block title %}Edycja egzaminu{% endblock %}
+
+{% block content %}
+    <h2>Edycja egzaminu</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Zapisz</button>
+    </form>
+{% endblock %}

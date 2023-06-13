@@ -1,0 +1,9 @@
+{% extends 'recruitment/base.html' %}
+
+{% block content %}
+    <h2>Wybierz rodzaj rejestracji:</h2>
+    <div class="registration-buttons">
+        <button><a href="{% url 'candidate_signup' %}" class="btn btn-primary">Kandydat</a></button>
+        <button><a href="{% url 'employee_signup' %}" class="btn btn-primary">Pracownik</a></button>
+    </div>
+{% endblock %}
