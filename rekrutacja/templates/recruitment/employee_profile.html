@@ -10,6 +10,7 @@
     <p><strong>Uczelnia:</strong> {{ profile.university }}</p>
     <p><strong>Numer służbowy:</strong> {{ profile.work_id}}</p>
 
+    <br>
     <form action="{% url 'profile_edit' %}" method="GET">
         <input class="button" type="submit" value="Edytuj profil">
     </form><br>

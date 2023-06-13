@@ -22,7 +22,7 @@ def search(request):
     query = request.GET.get('query', '')
     programs = Program.objects.none()  # Pusty QuerySet
 
-    if query:  # Sprawdza, czy pole zapytania jest niepuste
+    if query:
         programs = Program.objects.filter(Q(name__icontains=query))
 
     context = {
