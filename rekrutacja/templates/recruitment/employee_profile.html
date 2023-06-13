@@ -12,5 +12,9 @@
 
     <form action="{% url 'profile_edit' %}" method="GET">
         <input class="button" type="submit" value="Edytuj profil">
+    </form><br>
+
+    <form action="{% url 'delete_account' %}" method="GET">
+        <input class="button" type="submit" value="Usuń profil"/>
     </form>
 {% endblock %}

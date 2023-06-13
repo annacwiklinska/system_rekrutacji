@@ -1,0 +1,28 @@
+{% extends 'recruitment/base.html' %}
+
+{% block content %}
+    <h1>Lista aplikacji na kierunki</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Kandydat</th>
+            <th>Program</th>
+            <th>Status</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for application in applications %}
+            <tr>
+                <td>{{ application.candidate.first_name }} {{ application.candidate.last_name }}</td>
+                <td>{{ application.program.name }}</td>
+                <td>{{ application.status }}</td>
+                <td>
+                    <a href="{% url 'edit_application_status' application.id %}">Edytuj status</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

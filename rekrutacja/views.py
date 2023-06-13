@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -7,8 +8,10 @@ from django.shortcuts import render
 from django.db.models import Q
 from django.views.generic import CreateView
 from system_rekrutacji.settings import LOGIN_URL
-from .forms import LoginForm, CandidateSignUpForm, EmployeeSignUpForm, EmployeeForm, CandidateForm, ExamsForm
-from .models import Program, Candidate, Employee, Exams
+from .decorators import *
+from .forms import LoginForm, CandidateSignUpForm, EmployeeSignUpForm, EmployeeForm, CandidateForm, ExamsForm, \
+    ProgramForm
+from .models import Program, Candidate, Employee, Exams, RequiredExams, Exam, Application
 
 
 def index(request):
@@ -17,8 +20,10 @@ def index(request):
 
 def search(request):
     query = request.GET.get('query', '')
+    programs = Program.objects.none()  # Pusty QuerySet
 
-    programs = Program.objects.filter(Q(name__icontains=query))
+    if query:  # Sprawdza, czy pole zapytania jest niepuste
+        programs = Program.objects.filter(Q(name__icontains=query))
 
     context = {
         'query': query,
@@ -27,10 +32,13 @@ def search(request):
     return render(request, 'recruitment/search.html', context)
 
 
+
 def program_detail(request, program_id):
     program = get_object_or_404(Program, id=program_id)
+    required_exams = RequiredExams.objects.filter(program=program)
     context = {
-        'kierunek': program
+        'program': program,
+        'required_exams': required_exams
     }
     return render(request, 'recruitment/kierunek_studiow_detail.html', context)
 
@@ -200,6 +208,7 @@ def delete_account(request):
     return render(request, template_name, context)
 
 
+@candidate_required
 def edit_exams(request):
     candidate = Candidate.objects.get(user=request.user)
     exams = Exams.objects.filter(candidate=candidate)
@@ -207,11 +216,190 @@ def edit_exams(request):
     if request.method == 'POST':
         form = ExamsForm(request.POST)
         if form.is_valid():
-            exam = form.save(commit=False)
-            exam.candidate = candidate
-            exam.save()
+            new_exam = form.save(commit=False)
+            new_exam.candidate = candidate
+
+            existing_exam = Exams.objects.filter(candidate=candidate, name=new_exam.name).first()
+            if existing_exam:
+                messages.warning(request,
+                                 'Masz już wpisany wynik z tego przedmiotu. Możesz go jedynie edytować lub usunąć.')
+                return redirect('edit_exams')
+            else:
+                new_exam.save()
+
             return redirect('edit_exams')
     else:
         form = ExamsForm()
 
     return render(request, 'recruitment/edit_exams.html', {'form': form, 'exams': exams})
+
+
+@candidate_required
+def edit_exam(request, exam_id):
+    exam = get_object_or_404(Exams, id=exam_id)
+
+    if request.method == 'POST':
+        form = ExamsForm(request.POST, instance=exam)
+        if form.is_valid():
+            form.save()
+            return redirect('edit_exams')
+    else:
+        form = ExamsForm(instance=exam)
+
+    return render(request, 'recruitment/edit_exam.html', {'form': form, 'exam': exam})
+
+
+@candidate_required
+def delete_exam(request, exam_id):
+    exam = get_object_or_404(Exams, id=exam_id)
+    exam.delete()
+    return redirect('edit_exams')
+
+
+# def university_programs(request):
+#     employee = Employee.objects.get(user=request.user)
+#     programs = Program.objects.filter(university=employee.university)
+#     return render(request, 'recruitment/university_programs.html', {'programs': programs, 'employee': employee})
+
+
+# def university_programs(request):
+#     employee = Employee.objects.get(user=request.user)
+#     programs = Program.objects.filter(university=employee.university)
+#
+#     if request.method == 'POST':
+#         form = ProgramForm(request.POST)
+#         if form.is_valid():
+#             program = form.save(commit=False)
+#             program.university = employee.university
+#             program.save()
+#             return redirect('university_programs')
+#     else:
+#         form = ProgramForm()
+#
+#     return render(request, 'recruitment/university_programs.html',
+#                   {'programs': programs, 'form': form, 'employee': employee})
+
+def university_programs(request):
+    employee = Employee.objects.get(user=request.user)
+    programs = Program.objects.filter(university=employee.university)
+
+    if request.method == 'POST':
+        form = ProgramForm(request.POST)
+        if form.is_valid():
+            program = form.save(commit=False)
+            program.university = employee.university
+            program.save()
+
+            required_exams = request.POST.getlist('required_exams')
+            for exam_id in required_exams:
+                exam = Exam.objects.get(pk=exam_id)
+                multiplier = request.POST.get('multiplier_' + exam_id)
+                RequiredExams.objects.create(program=program, name=exam, multiplier=multiplier)
+
+            return redirect('university_programs')
+    else:
+        form = ProgramForm()
+
+    exams = Exam.objects.all()
+    return render(request, 'recruitment/university_programs.html',
+                  {'programs': programs, 'form': form, 'employee': employee, 'exams': exams})
+
+
+@employee_required
+def edit_program(request, program_id):
+    program = get_object_or_404(Program, id=program_id)
+    if request.method == 'POST':
+        form = ProgramForm(request.POST, instance=program)
+        if form.is_valid():
+            form.save()
+            return redirect('university_programs')
+    else:
+        form = ProgramForm(instance=program)
+
+    return render(request, 'recruitment/edit_program.html',
+                  {'form': form, 'program': program, 'program_id': program_id})
+
+
+@employee_required
+def delete_program(request, program_id):
+    program = get_object_or_404(Program, id=program_id)
+    if request.method == 'POST':
+        program.delete()
+        return redirect('university_programs')
+
+    return render(request, 'recruitment/delete_program.html', {'program': program})
+
+
+@candidate_required
+def submit_application(request, program_id):
+    program = get_object_or_404(Program, id=program_id)
+    candidate = request.user.candidate
+
+    existing_application = Application.objects.filter(candidate=candidate, program=program).first()
+    if existing_application:
+        messages.warning(request, 'Już aplikowałeś na ten kierunek. Nie możesz tego zrobić dwa razy')
+        return redirect('kierunek_detail', program.id)
+
+    application = Application.objects.create(candidate=candidate, program=program)
+    application.status = "nieopłacony"
+    application.save()
+
+    return redirect('application_payment', application.id)
+
+
+@candidate_required
+def application_payment(request, application_id):
+    application = get_object_or_404(Application, id=application_id)
+
+    if application.status == "opłacony":
+        return render(request, 'recruitment/payment_confirmation.html', {'application': application})
+
+    context = {
+        'application': application,
+    }
+    return render(request, 'recruitment/application_payment.html', context)
+
+
+@candidate_required
+def confirm_payment(request, application_id):
+    application = get_object_or_404(Application, id=application_id)
+
+    application.paid_admission_fee = True
+    application.status = "opłacony"
+    application.save()
+
+    return render(request, 'recruitment/payment_confirmation.html', {'application': application})
+
+
+@candidate_required
+def candidate_applications(request):
+    user = request.user
+    applications = Application.objects.filter(candidate=user.candidate)
+    context = {
+        'applications': applications,
+    }
+    return render(request, 'recruitment/candidate_applications.html', context)
+
+
+@employee_required
+def program_applications(request):
+    employee = Employee.objects.get(user=request.user)
+    applications = Application.objects.filter(program__university=employee.university)
+    return render(request, 'recruitment/program_applications.html', {'applications': applications})
+
+
+@employee_required
+def edit_application_status(request, application_id):
+    application = get_object_or_404(Application, id=application_id)
+
+    if request.method == 'POST':
+        new_status = request.POST.get('status')
+        application.status = new_status
+        application.save()
+        return redirect('program_applications')
+
+    return render(request, 'recruitment/edit_application_status.html', {'application': application})
+
+
+def access_denied(request):
+    return render(request, 'recruitment/access_denied.html')

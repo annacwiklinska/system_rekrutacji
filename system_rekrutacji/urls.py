@@ -17,14 +17,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from rekrutacja.views import index, search, program_detail, login_view, logout_view, register, \
-    candidate_signup, employee_signup, profile, edit_profile, delete_account, edit_exams
+from rekrutacja.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
+    path('access-denied/', access_denied, name='access_denied'),
     path('search/', search, name='wyszukiwarka_kierunkow'),
-    path('kierunek/<int:kierunek_id>/', program_detail, name='kierunek_detail'),
+    path('kierunek/<int:program_id>/', program_detail, name='kierunek_detail'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name="logout"),
     path('register/', register, name='register'),
@@ -34,7 +34,15 @@ urlpatterns = [
     path('profile/edit/', edit_profile, name='profile_edit'),
     path('profile/delete/', delete_account, name='delete_account'),
     path('edit_exams/', edit_exams, name='edit_exams'),
-    # path('profile/edit/', edit_profile, name='profile_edit'),
-    # path('candidate_profile/', candidate_profile, name='candidate_profile'),
-    # path('employee_profile/', employee_profile, name='employee_profile')
+    path('edit_exam/<int:exam_id>/', edit_exam, name='edit_exam'),
+    path('delete_exam/<int:exam_id>/', delete_exam, name='delete_exam'),
+    path('university_programs/', university_programs, name='university_programs'),
+    path('edit_program/<int:program_id>/', edit_program, name='edit_program'),
+    path('delete_program/<int:program_id>/', delete_program, name='delete_program'),
+    path('application_payment/<int:application_id>/', application_payment, name='application_payment'),
+    path('submit_application/<int:program_id>/', submit_application, name='submit_application'),
+    path('confirm_payment/<int:application_id>/', confirm_payment, name='confirm_payment'),
+    path('candidate_applications/', candidate_applications, name='candidate_applications'),
+    path('program_applications/', program_applications, name='program_applications'),
+    path('edit_application_status/<int:application_id>/', edit_application_status, name='edit_application_status'),
 ]

@@ -1,0 +1,121 @@
+/* line 1, rekrutacja/static/rekrutacja/style.scss */
+* {
+  margin: 0;
+  padding: 0; }
+
+/* line 6, rekrutacja/static/rekrutacja/style.scss */
+body {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  background-color: #f5f5f5;
+  color: #14213d;
+  position: relative;
+  min-height: 100vh; }
+  /* line 13, rekrutacja/static/rekrutacja/style.scss */
+  body h2, body h3, body h4, body h5, body h6 {
+    margin-bottom: 0.5em; }
+  /* line 16, rekrutacja/static/rekrutacja/style.scss */
+  body h3 {
+    margin-top: 0.5em; }
+  /* line 22, rekrutacja/static/rekrutacja/style.scss */
+  body table {
+    width: 50%;
+    border-collapse: collapse;
+    margin: 10px; }
+    /* line 26, rekrutacja/static/rekrutacja/style.scss */
+    body table.wide {
+      width: 100%; }
+    /* line 29, rekrutacja/static/rekrutacja/style.scss */
+    body table th,
+    body table td {
+      padding: 10px;
+      border: 1px solid black; }
+    /* line 35, rekrutacja/static/rekrutacja/style.scss */
+    body table th {
+      background-color: lightgray; }
+  /* line 40, rekrutacja/static/rekrutacja/style.scss */
+  body a {
+    text-decoration: none; }
+  /* line 43, rekrutacja/static/rekrutacja/style.scss */
+  body button {
+    border: none;
+    background-color: #14213d;
+    padding: 0.5em 1em;
+    color: #F6F7EB;
+    cursor: pointer; }
+    /* line 50, rekrutacja/static/rekrutacja/style.scss */
+    body button a {
+      color: #F6F7EB; }
+  /* line 54, rekrutacja/static/rekrutacja/style.scss */
+  body .button {
+    border: none;
+    background-color: #14213d;
+    padding: 0.5em 1em;
+    color: #F6F7EB;
+    cursor: pointer; }
+    /* line 60, rekrutacja/static/rekrutacja/style.scss */
+    body .button a {
+      color: #F6F7EB; }
+  /* line 64, rekrutacja/static/rekrutacja/style.scss */
+  body .container {
+    padding-bottom: 8em; }
+    /* line 66, rekrutacja/static/rekrutacja/style.scss */
+    body .container header {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2em;
+      align-items: center;
+      padding: 2em;
+      background-color: #DBDBDB; }
+      /* line 74, rekrutacja/static/rekrutacja/style.scss */
+      body .container header h1 a {
+        color: #393E41;
+        font-size: larger; }
+      /* line 78, rekrutacja/static/rekrutacja/style.scss */
+      body .container header .user-panel {
+        display: flex;
+        align-items: center;
+        gap: 3em;
+        font-size: 1.2em; }
+        /* line 84, rekrutacja/static/rekrutacja/style.scss */
+        body .container header .user-panel button a {
+          font-size: 1.05em;
+          text-transform: uppercase;
+          letter-spacing: 0.05em; }
+    /* line 92, rekrutacja/static/rekrutacja/style.scss */
+    body .container nav {
+      background-color: #548dc5;
+      display: flex;
+      justify-content: center;
+      gap: 3em; }
+      /* line 97, rekrutacja/static/rekrutacja/style.scss */
+      body .container nav a {
+        color: #F6F7EB;
+        padding: 1em;
+        font-size: 1.05em; }
+        /* line 101, rekrutacja/static/rekrutacja/style.scss */
+        body .container nav a:hover {
+          background-color: #619fde; }
+    /* line 106, rekrutacja/static/rekrutacja/style.scss */
+    body .container main {
+      width: 80%;
+      padding: 2em 0;
+      margin: auto;
+      font-size: 1.1em; }
+      /* line 112, rekrutacja/static/rekrutacja/style.scss */
+      body .container main p {
+        margin: 0.3em 0;
+        font-size: 1.01em; }
+  /* line 118, rekrutacja/static/rekrutacja/style.scss */
+  body footer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 6em;
+    align-items: center;
+    font-size: 1.2em;
+    background-color: #DBDBDB;
+    margin-top: 2em; }

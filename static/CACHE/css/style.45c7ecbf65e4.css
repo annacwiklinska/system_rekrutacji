@@ -1,0 +1,62 @@
+/* line 1, rekrutacja/static/rekrutacja/style.scss */
+* {
+  margin: 0;
+  padding: 0; }
+
+/* line 6, rekrutacja/static/rekrutacja/style.scss */
+body {
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  background-color: #F6F7EB;
+  color: #14213d; }
+  /* line 10, rekrutacja/static/rekrutacja/style.scss */
+  body a {
+    text-decoration: none; }
+  /* line 13, rekrutacja/static/rekrutacja/style.scss */
+  body button {
+    border: none;
+    background-color: #14213d;
+    padding: 0.5em 1em;
+    color: #F6F7EB; }
+    /* line 18, rekrutacja/static/rekrutacja/style.scss */
+    body button a {
+      color: #F6F7EB; }
+  /* line 22, rekrutacja/static/rekrutacja/style.scss */
+  body header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2em;
+    align-items: center;
+    padding: 2em; }
+    /* line 29, rekrutacja/static/rekrutacja/style.scss */
+    body header h1 a {
+      color: #393E41;
+      font-size: larger; }
+    /* line 33, rekrutacja/static/rekrutacja/style.scss */
+    body header .user-panel {
+      display: flex;
+      align-items: center;
+      gap: 3em;
+      font-size: 1.2em; }
+  /* line 40, rekrutacja/static/rekrutacja/style.scss */
+  body nav {
+    background-color: #548dc5;
+    display: flex;
+    justify-content: center;
+    gap: 3em; }
+    /* line 46, rekrutacja/static/rekrutacja/style.scss */
+    body nav a {
+      color: #F6F7EB;
+      padding: 1em;
+      font-size: 1.05em; }
+      /* line 50, rekrutacja/static/rekrutacja/style.scss */
+      body nav a:hover {
+        background-color: #619fde; }
+  /* line 55, rekrutacja/static/rekrutacja/style.scss */
+  body main {
+    width: 80%;
+    margin: auto; }
+  /* line 60, rekrutacja/static/rekrutacja/style.scss */
+  body footer {
+    display: flex;
+    justify-content: center; }

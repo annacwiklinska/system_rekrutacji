@@ -57,15 +57,13 @@ class Program(models.Model):
     academic_year = models.CharField(max_length=9)
     language = models.CharField(max_length=50)
 
-    # required_exams = models.OneToOneField(RequiredExams, on_delete=models.CASCADE, blank=True, null=True)
-
     def __str__(self):
         return self.name
 
     def clean(self):
         if self.level != 'I stopień' and self.type:
             raise ValidationError(
-                {'typ': 'Pole "typ" może być uzupełnione tylko dla kierunków studiów stopnia "I stopień".'})
+                {'type': 'Pole "typ" może być uzupełnione tylko dla kierunków studiów stopnia "I stopień".'})
         if self.level == 'I stopień' and not self.type:
             self.type = "licencjackie"
 
@@ -92,6 +90,7 @@ class Candidate(models.Model):
     house_number = models.CharField(max_length=10)
     flat_number = models.CharField(max_length=10, blank=True, null=True)
     country = models.CharField(max_length=100)
+
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
@@ -142,15 +141,34 @@ class RequiredExams(models.Model):
         verbose_name_plural = "Wymagane Matury"
         unique_together = ('program', 'name')
 
-# class Application(models.Model):
-#     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
-#     program = models.ForeignKey(Program, on_delete=models.CASCADE)
-#     paid_admission_fee = models.BooleanField(default=False)
-#     date = models.DateField(auto_now_add=True)
-#
-#     def __str__(self):
-#         return f"{self.candidate.first_name} {self.candidate.last_name}, {self.program.name}, {self.program.university.name}"
-#
-#     class Meta:
-#         verbose_name = "Wniosek"
-#         verbose_name_plural = "Wnioski"
+
+class Application(models.Model):
+    STATUS_CHOICES = (
+        ('nieopłacony', 'nieopłacony'),
+        ('opłacony', 'opłacony'),
+        ('przyjęty', 'przyjęty'),
+        ('odrzucony', 'odrzucony'),
+        ('na liście rezerwowej', 'Na liście rezerwowej'),
+    )
+    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
+    program = models.ForeignKey(Program, on_delete=models.CASCADE)
+    paid_admission_fee = models.BooleanField(default=False)
+    date = models.DateField(auto_now_add=True)
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES)
+
+    def __str__(self):
+        return f"{self.candidate.first_name} {self.candidate.last_name}, {self.program.name}, {self.program.university.name}"
+
+    class Meta:
+        verbose_name = "Wniosek"
+        verbose_name_plural = "Wnioski"
+        unique_together = ('candidate', 'program')
+
+
+class Ranking(models.Model):
+    application = models.ForeignKey(Application, on_delete=models.CASCADE)
+    points = models.IntegerField()
+
+    class Meta:
+        verbose_name = "Ranking"
+        verbose_name_plural = "Rankingi"

@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.db import transaction
 
-from .models import User, Candidate, University, Employee, Exams
+from .models import User, Candidate, University, Employee, Exams, Program
 
 
 class LoginForm(AuthenticationForm):
@@ -106,3 +106,22 @@ class ExamsForm(forms.ModelForm):
     class Meta:
         model = Exams
         fields = ['name', 'score']
+        labels = {
+            'name': 'Przedmiot',
+            'score': 'Wynik',
+        }
+
+
+class ProgramForm(forms.ModelForm):
+    class Meta:
+        model = Program
+        fields = ('name', 'level', 'form', 'type', 'description', 'academic_year', 'language')
+        labels = {
+            'name': 'Nazwa',
+            'level': 'Stopień',
+            'form': 'Forma',
+            'type': 'Typ',
+            'description': 'Opis',
+            'academic_year': 'Rok akademicki',
+            'language': 'Język',
+        }

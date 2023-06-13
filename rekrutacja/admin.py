@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import University, Program, Candidate, Employee, Exam, Exams
+from .models import *
 
 
 @admin.register(Exam)
@@ -24,8 +24,7 @@ class UniversityAdmin(admin.ModelAdmin):
 
 @admin.register(Program)
 class ProgramAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in Program._meta.get_fields() if
-                    field.name != "id" and field.name != "description"]
+    list_display = ['name', 'university', 'level', 'form', 'type', 'academic_year', 'language']
 
 
 @admin.register(Candidate)
@@ -35,5 +34,9 @@ class CandidateAdmin(admin.ModelAdmin):
 
 @admin.register(Employee)
 class EmployeeAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in Employee._meta.get_fields() if field.name != "id"]
+    list_display = ['first_name', 'last_name', 'university', 'work_id']
+
+@admin.register(Application)
+class ApplicationAdmin(admin.ModelAdmin):
+    list_display = ['candidate', 'program', 'paid_admission_fee', 'date', 'status']
 

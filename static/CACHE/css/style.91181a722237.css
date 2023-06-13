@@ -1,0 +1,11 @@
+/* line 1, rekrutacja/static/rekrutacja/style.scss */
+* {
+  margin: 0;
+  padding: 0; }
+
+/* line 6, rekrutacja/static/rekrutacja/style.scss */
+body {
+  background-color: #F6F7EB; }
+  /* line 9, rekrutacja/static/rekrutacja/style.scss */
+  body header h1 {
+    background-color: #393E41; }
