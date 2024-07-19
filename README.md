@@ -79,6 +79,3 @@ python manage.py runserver
 
 The application will be available at `http://127.0.0.1:8000/`.
 
-## Contact
-
-For questions or feedback, please contact [Your Name] at [your-email@example.com].
