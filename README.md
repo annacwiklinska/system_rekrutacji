@@ -24,7 +24,7 @@ To set up the project locally, follow these steps:
 
    ```bash
    git clone <repository-url>
-   cd system-rekrutacji
+   cd system_rekrutacji
    ```
 
 2. **Create a Virtual Environment:**
